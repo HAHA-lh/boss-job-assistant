@@ -35,4 +35,41 @@ describe("visible page extractor", () => {
     document.body.innerHTML = `<div class="job-card-wrapper"><p>只有一段无结构文本 20-30K</p></div>`;
     expect(extractVisibleJobsFromPage()).toEqual([]);
   });
+
+  it("supports salary-discovered cards without job links", () => {
+    document.body.innerHTML = `
+      <main class="search-layout">
+        <section class="position-item-v2">
+          <div><span>猎头</span><span>设计总负责人（钱包·远程）</span><strong>70-100K·15薪</strong></div>
+          <div><span>5-10年</span><span>本科</span><span>UI设计</span><span>交互设计</span></div>
+          <footer><span>某大型金融集团公司</span><span>上海</span></footer>
+        </section>
+      </main>`;
+
+    const jobs = extractVisibleJobsFromPage();
+    expect(jobs).toHaveLength(1);
+    expect(jobs[0]).toMatchObject({
+      title: "设计总负责人（钱包·远程）",
+      company: "某大型金融集团公司",
+      location: "上海",
+      salaryText: "70-100K·15薪",
+      experienceText: "5-10年",
+      educationText: "本科",
+      url: undefined
+    });
+  });
+
+  it("keeps a truthful placeholder when a visible card omits the company", () => {
+    document.body.innerHTML = `
+      <div class="job-item-v2">
+        <span>AI 动画美术总监</span><b>25-50K·13薪</b>
+        <span>5-10年</span><span>本科</span><span>上海</span>
+      </div>`;
+
+    expect(extractVisibleJobsFromPage()[0]).toMatchObject({
+      title: "AI 动画美术总监",
+      company: "公司未显示",
+      salaryText: "25-50K·13薪"
+    });
+  });
 });

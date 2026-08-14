@@ -4,7 +4,7 @@ export default defineManifest({
   manifest_version: 3,
   name: "求职匹配助手",
   short_name: "岗位助手",
-  version: "0.1.4",
+  version: "0.1.5",
   description: "在本地解析简历、匹配当前可见岗位并生成可核验的招呼语草稿。",
   minimum_chrome_version: "114",
   permissions: [
