@@ -1,0 +1,23 @@
+node_modules/
+dist/
+coverage/
+.vite/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local secrets and extension signing material must never be committed.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crx
+
+# Local test and browser profiles.
+playwright-report/
+test-results/
+chrome-extension-*/
+playwright-extension-*/
+extension-sidepanel-runtime.png
