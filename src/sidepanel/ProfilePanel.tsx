@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { EMPTY_PROFILE } from "../core/defaults";
 import { splitList } from "../core/privacy";
 import type { EducationLevel, ResumeProfile } from "../core/types";
+import MultiValueInput from "./MultiValueInput";
 
 interface Props {
   profile?: ResumeProfile;
@@ -70,6 +71,14 @@ export default function ProfilePanel({ profile, onSave }: Props) {
 
   const listValue = (values: string[]) => values.join("，");
 
+  function updateSkills(names: string[]): void {
+    const currentSkills = new Map(draft.skills.map((skill) => [skill.name.toLowerCase(), skill]));
+    setDraft({
+      ...draft,
+      skills: names.map((name) => currentSkills.get(name.toLowerCase()) || { name })
+    });
+  }
+
   return (
     <div className="stack">
       <section className="hero-card compact">
@@ -114,10 +123,15 @@ export default function ProfilePanel({ profile, onSave }: Props) {
             </select>
           </label>
         </div>
-        <label>
-          已掌握技能 <b>必填</b>
-          <textarea rows={3} value={draft.skills.map((skill) => skill.name).join("，")} onChange={(event) => setDraft({ ...draft, skills: splitList(event.target.value).map((name) => ({ name })) })} placeholder="TypeScript，React，Node.js，SQL" />
-        </label>
+        <div className="field-group">
+          <div className="field-label">已掌握技能 <b>必填</b></div>
+          <MultiValueInput
+            ariaLabel="添加已掌握技能"
+            values={draft.skills.map((skill) => skill.name)}
+            onChange={updateSkills}
+            placeholder="例如：AIGC 视频生成"
+          />
+        </div>
       </section>
 
       <section className="card form-card">
@@ -140,10 +154,15 @@ export default function ProfilePanel({ profile, onSave }: Props) {
           行业经历
           <input value={listValue(draft.industries)} onChange={(event) => setDraft({ ...draft, industries: splitList(event.target.value) })} placeholder="互联网，企业服务" />
         </label>
-        <label>
-          项目关键词
-          <textarea rows={2} value={listValue(draft.projectKeywords)} onChange={(event) => setDraft({ ...draft, projectKeywords: splitList(event.target.value) })} placeholder="后台管理，数据可视化，增长平台" />
-        </label>
+        <div className="field-group">
+          <div className="field-label">项目关键词</div>
+          <MultiValueInput
+            ariaLabel="添加项目关键词"
+            values={draft.projectKeywords}
+            onChange={(projectKeywords) => setDraft({ ...draft, projectKeywords })}
+            placeholder="例如：动画制作"
+          />
+        </div>
         <label>
           可用于招呼语的真实经历亮点 <small>每行一条</small>
           <textarea rows={5} value={draft.highlights.join("\n")} onChange={(event) => setDraft({ ...draft, highlights: event.target.value.split(/\n+/).map((value) => value.trim()).filter(Boolean).slice(0, 8) })} placeholder="主导重构后台管理系统，首屏加载时间降低 40%" />

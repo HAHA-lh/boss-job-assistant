@@ -79,8 +79,23 @@ code { border-radius: 4px; padding: 1px 4px; background: #eef2f4; color: #3a5363
 label { display: flex; flex-direction: column; gap: 6px; color: #3d5260; font-size: 11px; font-weight: 700; }
 label b { color: var(--primary); font-size: 9px; }
 label small { color: var(--muted); font-weight: 400; }
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-label { color: #3d5260; font-size: 11px; font-weight: 700; }
+.field-label b { color: var(--primary); font-size: 9px; }
 input, textarea, select { width: 100%; border: 1px solid #d7e1e4; border-radius: 9px; outline: none; background: #fbfcfd; color: var(--ink); padding: 9px 10px; font-size: 12px; line-height: 1.45; resize: vertical; }
 input:focus, textarea:focus, select:focus { border-color: #77bfb2; box-shadow: 0 0 0 3px rgba(15,141,121,.09); background: #fff; }
+.multi-value-input { display: flex; flex-direction: column; gap: 7px; border: 1px solid #d7e1e4; border-radius: 11px; padding: 8px; background: #fbfcfd; }
+.multi-value-input:focus-within { border-color: #77bfb2; box-shadow: 0 0 0 3px rgba(15,141,121,.09); background: #fff; }
+.multi-value-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.multi-value-tag { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; border: 1px solid #bfe1d9; border-radius: 999px; padding: 5px 6px 5px 9px; color: var(--primary-dark); background: #eaf8f4; font-size: 11px; font-weight: 700; }
+.multi-value-tag > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.multi-value-tag button { display: grid; place-items: center; flex: 0 0 auto; width: 17px; height: 17px; border: 0; border-radius: 50%; padding: 0; color: #47756c; background: rgba(15,141,121,.1); font-size: 13px; line-height: 1; }
+.multi-value-tag button:hover { color: #fff; background: var(--primary); }
+.multi-value-entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
+.multi-value-entry input { min-width: 0; border: 0; padding: 7px 3px; background: transparent; box-shadow: none; }
+.multi-value-entry input:focus { border: 0; background: transparent; box-shadow: none; }
+.multi-value-entry .button { min-width: 52px; padding: 8px 10px; }
+.multi-value-input > small { color: var(--muted); font-size: 9px; font-weight: 400; line-height: 1.4; }
 .form-grid { display: grid; gap: 10px; }
 .form-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .form-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
